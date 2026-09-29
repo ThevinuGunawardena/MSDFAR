@@ -1405,7 +1405,7 @@ $(document).ready(function () {
 });
 $(document).ready(function () {
     function calculateTotal() {
-
+        if ($('.total-weight').length === 0) return;
         var total = 0;
 
         // Select ALL inputs inside any element with class "total-weight"
@@ -1415,8 +1415,6 @@ $(document).ready(function () {
                 total += val;
             }
         });
-        console.log("sdsdddd")
-        console.log(total)
         // Update the display (change #grand-total to your target element)
         $('#applicationexportbechedemer-charges').val(total * 20);
     }

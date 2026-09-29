@@ -12,13 +12,9 @@ class AppAsset extends AssetBundle
     public $basePath = '@webroot';
     public $baseUrl = '@web';
     public $css = [
-//        'css/site.css',
         'themeAssets/css/theme.min.css',
-//        'css/css/bootstrap-datepicker.min.css',
-//        'css/css/choose.css',
+        'themeAssets/fonts/fontawesome/css/all.min.css',
         'css/site.css',
-//        'css/jquery-ui.css',
-//        'css/jquery.signature.css',
         "themeAssets/css/sweet-alert.css",
     ];
     public $js = [

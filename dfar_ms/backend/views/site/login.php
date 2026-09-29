@@ -17,14 +17,16 @@ $logoPath = Url::to('@web/themeAssets/images/login_logo.png');
 $formlogoPath = Url::to('@web/themeAssets/images/form_logo.png');
 $nationalPath = Url::to('@web/themeAssets/images/national_logo.png');
 
-$this->registerJsFile(
-    'https://challenges.cloudflare.com/turnstile/v0/api.js',
-    [
-        'position' => \yii\web\View::POS_HEAD,
-        'async' => true,
-        'defer' => true,
-    ]
-);
+if (!empty(Yii::$app->params['turnstile']['enabled'])) {
+    $this->registerJsFile(
+        'https://challenges.cloudflare.com/turnstile/v0/api.js',
+        [
+            'position' => \yii\web\View::POS_HEAD,
+            'async' => true,
+            'defer' => true,
+        ]
+    );
+}
 ?>
 <style>
    
@@ -56,12 +58,13 @@ $this->registerJsFile(
 
                 <?php $form = ActiveForm::begin(['id' => 'login-form']); ?>
 
-                <?= $form->field($model, 'nic')->textInput(['autofocus' => true]) ?>
+                <?= $form->field($model, 'nic')->textInput(['autofocus' => true, 'autocomplete' => 'username']) ?>
 
                 <?= $form->field($model, 'password', [
                         'template' => "{label}\n<div class=\"input-group\">{input}<span class=\"input-group-text toggle-password\"><i class=\"fa fa-fw fa-eye\"></i></span></div>",
                         'inputOptions' => [
                             'class' => 'form-control',
+                            'autocomplete' => 'current-password',
                         ],
                         'labelOptions' => [
                             'class' => 'form-label',
@@ -78,15 +81,17 @@ $this->registerJsFile(
 
                 <?= $form->field($model, 'rememberMe')->checkbox() ?>
 
+              <?php if (!empty(Yii::$app->params['turnstile']['enabled'])): ?>
               <div class="form-group">
                 <?= Html::tag('div', '', [
                     'class' => 'cf-turnstile',
                     'data-sitekey' =>
-                        Yii::$app->params['turnstile']['siteKey'],
+                        Yii::$app->params['turnstile']['siteKey'] ?? '',
                     'data-action' => 'login',
                     'data-theme' => 'auto',
                 ]) ?>
-            </div>
+              </div>
+              <?php endif; ?>
 
             <div class="form-group">
                 <?= Html::submitButton(
