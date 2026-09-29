@@ -17,6 +17,7 @@ class Controller extends \yii\web\Controller
         'site/captcha',
         'site/request-password-reset',
         'site/reset-password',
+        'site/expire',
         'error/index',
         'api/v1/report-website',
         'api/v1/catch-production',

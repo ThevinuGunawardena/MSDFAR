@@ -1,33 +1,43 @@
-To run a cURL request using PHP, you need to use the curl functions provided by PHP. Below is a simple example of how to perform a GET request with cURL in PHP:
-
-php
-Copy code
 <?php
 // Initialize a cURL session
 $ch = curl_init();
 
-// Set the URL for the cURL request
-$url = 'https://msdfar.hynetz.com/dfar/backend/web/site/expire';
-curl_setopt($ch, CURLOPT_URL, $url);
+// Target URL for marking expired records (local or configured environment)
+$baseUrl = getenv('DFAR_BACKEND_URL') ?: 'http://127.0.0.1:8080';
+$url = rtrim($baseUrl, '/') . '/site/expire';
 
-// Set the cURL option to return the response as a string
+echo "Executing expiration cron job at: $url\n";
+
+curl_setopt($ch, CURLOPT_URL, $url);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($ch, CURLOPT_TIMEOUT, 30);
+curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
 
 // Execute the cURL request and get the response
 $response = curl_exec($ch);
+$httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 
 // Check for cURL errors
 if ($response === false) {
     $error = curl_error($ch);
-    echo "cURL Error: $error";
+    echo "cURL Error ($httpCode): $error\n";
 } else {
-    // Decode the JSON response (if the response is in JSON format)
-    $data = json_decode($response, true);
+    if ($httpCode === 200) {
+        echo "Successfully executed expiration job! (HTTP Status: $httpCode)\n";
+    } else {
+        echo "Executed expiration job with HTTP Status: $httpCode\n";
+    }
 
-    // Print the response data
-    print_r($data);
+    if (!empty($response)) {
+        $data = json_decode($response, true);
+        if ($data !== null) {
+            print_r($data);
+        } else {
+            echo $response . "\n";
+        }
+    }
 }
 
 // Close the cURL session
 curl_close($ch);
-?>
