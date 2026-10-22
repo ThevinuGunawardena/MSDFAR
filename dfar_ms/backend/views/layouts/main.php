@@ -595,6 +595,9 @@ if (
                                     </a>
                                 </li>
                             <?php endif; ?>
+                            <?php if (UserTypeUtil::hasType(Constant::ADMIN)):
+                                require("admin-menu.php");
+                            endif; ?>
                             <?php if (UserTypeUtil::hasType(Constant::ADMINISTRATION)):
                                 require("administration_menu.php");
                             endif; ?>

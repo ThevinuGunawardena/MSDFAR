@@ -34,5 +34,25 @@
 
     </a>
 </li>
+<li class="nav-item ">
+    <a class="nav-link " href="<?= $webURL ?>/e-log-view/index"><i
+                class="fa fa-fw fa-ship"></i><?= Yii::t('app', 'E-Log Trips') ?>
+    </a>
+</li>
+<li class="nav-item ">
+    <a class="nav-link " href="<?= $webURL ?>/e-log-view/report"><i
+                class="fa fa-fw fa-file-alt"></i><?= Yii::t('app', 'E-Log Report') ?>
+    </a>
+</li>
+<li class="nav-item ">
+    <a class="nav-link " href="<?= $webURL ?>/e-log-view/report-view"><i
+                class="fa fa-fw fa-chart-bar"></i><?= Yii::t('app', 'E-Log Catch Analysis') ?>
+    </a>
+</li>
+<li class="nav-item ">
+    <a class="nav-link " href="<?= $webURL ?>/e-log-temp/index"><i
+                class="fa fa-fw fa-edit"></i><?= Yii::t('app', 'E-Log Temp Form') ?>
+    </a>
+</li>
 
 

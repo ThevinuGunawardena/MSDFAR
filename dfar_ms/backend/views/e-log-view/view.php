@@ -19,7 +19,12 @@ $userType = $userType ?? null;
 // --- Role checks using UserTypeUtil to handle comma-separated types ---
 
 
-$isAdminUser = \backend\config\UserTypeUtil::hasType(Constant::AD_Highseas) || \backend\config\UserTypeUtil::hasType(Constant::ITD);
+$isAdminUser = \backend\config\UserTypeUtil::hasType(Constant::ADMIN)
+    || \backend\config\UserTypeUtil::hasType(Constant::ADMINISTRATION)
+    || \backend\config\UserTypeUtil::hasType(Constant::DM)
+    || \backend\config\UserTypeUtil::hasType(Constant::DG)
+    || \backend\config\UserTypeUtil::hasType(Constant::AD_Highseas)
+    || \backend\config\UserTypeUtil::hasType(Constant::ITD);
 $isHarbourOfficer = \backend\config\UserTypeUtil::hasType(Constant::HARBOUR_OFFICER);
 
 // 24 hour window only applies to harbour officer

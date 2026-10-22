@@ -45,7 +45,11 @@ class ELogViewController extends Controller
                             if (Yii::$app->user->isGuest) {
                                 return false;
                             }
-                            return UserTypeUtil::hasType(Constant::HARBOUR_OFFICER)
+                            return UserTypeUtil::hasType(Constant::ADMIN)
+                                || UserTypeUtil::hasType(Constant::ADMINISTRATION)
+                                || UserTypeUtil::hasType(Constant::DM)
+                                || UserTypeUtil::hasType(Constant::DG)
+                                || UserTypeUtil::hasType(Constant::HARBOUR_OFFICER)
                                 || UserTypeUtil::hasType(Constant::QUALITY_EXPORT_OFFICER)
                                 || UserTypeUtil::hasType(Constant::AD_Highseas)
                                 || UserTypeUtil::hasType(Constant::ITD);
@@ -75,7 +79,7 @@ class ELogViewController extends Controller
         $searchModel = new ELogSearch();
         $dataProvider = $searchModel->search(
             Yii::$app->request->queryParams,
-            Yii::$app->user->identity->officerProfile->harbour ?? null
+            Yii::$app->user->identity->officerProfile?->harbour ?? null
         );
 
         return $this->render('index', [
@@ -89,7 +93,7 @@ class ELogViewController extends Controller
     $searchModel  = new ELogReportSearch();
     $dataProvider = $searchModel->search(
         Yii::$app->request->queryParams,
-        Yii::$app->user->identity->officerProfile->harbour ?? null
+        Yii::$app->user->identity->officerProfile?->harbour ?? null
     );
 
     return $this->render('report', [
